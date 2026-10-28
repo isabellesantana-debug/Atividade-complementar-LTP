@@ -24,16 +24,22 @@ formulario.addEventListener("submit", function(event) {
     const mensagem = document.getElementById("mensagem");
 
     try {
-        if (nome === "") {
-            throw new Error("O nome é obrigatório!");
+        let erros = [];
+
+        if (nome.trim() === "") {
+            erros.push("O nome é obrigatório!");
         }
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            throw new Error("E-mail inválido!");
+            erros.push("E-mail inválido!");
         }
 
         if (!/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/.test(telefone)) {
-            throw new Error("Telefone inválido!");
+            erros.push("Telefone inválido!");
+        }
+
+        if (erros.length > 0) {
+            throw new Error(erros.join(" "));
         }
 
         const usuario1 = new Usuario(nome, email, telefone);
